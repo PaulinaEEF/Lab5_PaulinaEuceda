@@ -62,12 +62,18 @@ public class Main extends javax.swing.JFrame {
         jl_libres = new javax.swing.JList<>();
         jScrollPane6 = new javax.swing.JScrollPane();
         jl_encarcelados = new javax.swing.JList<>();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jp_lista = new javax.swing.JPopupMenu();
         jmi_mover = new javax.swing.JMenuItem();
         jmi_eliminar = new javax.swing.JMenuItem();
         jp_listaH = new javax.swing.JPopupMenu();
         jmi_mover1 = new javax.swing.JMenuItem();
         jmi_eliminar1 = new javax.swing.JMenuItem();
+        jp_libres = new javax.swing.JPopupMenu();
+        jmi_carcel = new javax.swing.JMenuItem();
+        jp_encarcelados = new javax.swing.JPopupMenu();
+        jmi_encarcelados = new javax.swing.JMenuItem();
         jp_login = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tf_contraseñaL = new javax.swing.JPasswordField();
@@ -211,10 +217,24 @@ public class Main extends javax.swing.JFrame {
         jd_crearHeroes.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         jl_libres.setModel(new DefaultListModel());
+        jl_libres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_libresMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jl_libres);
 
         jl_encarcelados.setModel(new DefaultListModel());
+        jl_encarcelados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_encarceladosMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jl_encarcelados);
+
+        jLabel21.setText("Lista de Villanos");
+
+        jLabel22.setText("Carcel");
 
         javax.swing.GroupLayout jd_carcelLayout = new javax.swing.GroupLayout(jd_carcel.getContentPane());
         jd_carcel.getContentPane().setLayout(jd_carcelLayout);
@@ -222,15 +242,23 @@ public class Main extends javax.swing.JFrame {
             jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_carcelLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addGroup(jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addGap(123, 123, 123)
+                .addGroup(jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         jd_carcelLayout.setVerticalGroup(
             jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_carcelLayout.createSequentialGroup()
-                .addGap(114, 114, 114)
+                .addGap(94, 94, 94)
+                .addGroup(jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jd_carcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                     .addComponent(jScrollPane6))
@@ -268,6 +296,22 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jp_listaH.add(jmi_eliminar1);
+
+        jmi_carcel.setText("Encarcelar");
+        jmi_carcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_carcelActionPerformed(evt);
+            }
+        });
+        jp_libres.add(jmi_carcel);
+
+        jmi_encarcelados.setText("Escapar");
+        jmi_encarcelados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_encarceladosActionPerformed(evt);
+            }
+        });
+        jp_encarcelados.add(jmi_encarcelados);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -501,41 +545,56 @@ public class Main extends javax.swing.JFrame {
             int centinela = -1;
             int centinela2 = -1;
             for (int i = 0; i < raiz.getChildCount(); i++) {
-                if (raiz.getChildAt(i).toString().equals(grupo)) {
 
-                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+                if (raiz.getChildAt(i).toString().equals("Villanos")) {
+                    for (int j = 0; j < raiz.getChildAt(i).getChildCount(); j++) {
 
-                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
-                    centinela = 1;
-                } //fin if
-                if (raiz.getChildAt(i) instanceof Villanos) {
-                    DefaultMutableTreeNode p = new DefaultMutableTreeNode("Villanos");
+                        if (raiz.getChildAt(i).getChildAt(j).toString().equals(grupo)) {
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i).getChildAt(j)).add(p);
+                            centinela = 1;
+                            i = raiz.getChildCount();
+                            break;
+                        } else if (raiz.getChildAt(i).getChildAt(j).toString().equals(grupo)) {
 
-                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                            centinela = 1;
+                            i = raiz.getChildCount();
+
+                            break;
+                        } else {
+                            DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(grupo);
+
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+
+                            carpeta.add(p);
+
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(carpeta);
+                            i = raiz.getChildCount();
+
+                            break;
+                        }
+                    }
+
                     centinela2 = 1;
-                }
+                } //fin if
+
             } //fin for  
 
-            if (centinela2 == -1) {
-                if (centinela == -1) {
-                    DefaultMutableTreeNode tipo = new DefaultMutableTreeNode("Villanos");
+            if (centinela2 == -1 && centinela == -1) {
+                DefaultMutableTreeNode tipo = new DefaultMutableTreeNode("Villanos");
 
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
+                DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
 
-                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+                DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
 
-                    tipo.add(n);
-                    n.add(p);
-                    raiz.add(tipo);
-                } else {
-                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
+                tipo.add(n);
+                n.add(p);
+                raiz.add(tipo);
 
-                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+            } // fin if
 
-                    n.add(p);
-                    raiz.add(n);
-                }
-            }  // fin if          
             modeloARBOL.reload();
 
         } else {
@@ -599,7 +658,9 @@ public class Main extends javax.swing.JFrame {
                             carpeta.add(p);
 
                             ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(carpeta);
+                            i = raiz.getChildCount();
 
+                            break;
                         }
                     }
 
@@ -659,6 +720,92 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmi_eliminar1ActionPerformed
 
+    private void jl_libresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_libresMouseClicked
+        // TODO add your handling code here:
+        if (jl_libres.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                jp_libres.show(evt.getComponent(), evt.getX(), evt.getY());
+
+            }
+        }
+    }//GEN-LAST:event_jl_libresMouseClicked
+
+    private void jmi_carcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_carcelActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel m = (DefaultListModel) jl_libres.getModel();
+
+        DefaultListModel p = (DefaultListModel) jl_encarcelados.getModel();
+
+        DefaultListModel modeloLISTA = (DefaultListModel) jl_villanos.getModel();
+
+        String grupo, nombre, origen;
+        int edad, altura, muertes;
+
+        ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).setCarcel(true);
+        
+        grupo = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getGrupo();
+
+        nombre = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getNombre();
+
+        edad = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getEdad();
+
+        origen = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getPlaneta();
+
+        altura = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getAltura();
+
+        muertes = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getMuertes();
+        
+        Villanos c = new Villanos(nombre, edad, origen, altura, true, muertes, grupo);
+        
+        p.addElement(c);
+        jl_encarcelados.setModel(p);
+
+        m.remove(jl_libres.getSelectedIndex());
+    }//GEN-LAST:event_jmi_carcelActionPerformed
+
+    private void jl_encarceladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_encarceladosMouseClicked
+        // TODO add your handling code here:
+        if (jl_encarcelados.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                jp_encarcelados.show(evt.getComponent(), evt.getX(), evt.getY());
+
+            }
+        }
+    }//GEN-LAST:event_jl_encarceladosMouseClicked
+
+    private void jmi_encarceladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_encarceladosActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel m = (DefaultListModel) jl_libres.getModel();
+
+        DefaultListModel p = (DefaultListModel) jl_encarcelados.getModel();
+
+        DefaultListModel modeloLISTA = (DefaultListModel) jl_villanos.getModel();
+
+        String grupo, nombre, origen;
+        int edad, altura, muertes;
+        
+        ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).setCarcel(false);
+
+        grupo = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getGrupo();
+
+        nombre = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getNombre();
+
+        edad = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getEdad();
+
+        origen = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getPlaneta();
+
+        altura = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getAltura();
+
+        muertes = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getMuertes();
+        
+        Villanos c = new Villanos(nombre, edad, origen, altura, false, muertes, grupo);
+        
+        p.addElement(c);
+        jl_encarcelados.setModel(p);
+
+        m.remove(jl_encarcelados.getSelectedIndex());
+    }//GEN-LAST:event_jmi_encarceladosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -711,6 +858,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -732,10 +881,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_heroe;
     private javax.swing.JList<String> jl_libres;
     private javax.swing.JList<String> jl_villanos;
+    private javax.swing.JMenuItem jmi_carcel;
     private javax.swing.JMenuItem jmi_eliminar;
     private javax.swing.JMenuItem jmi_eliminar1;
+    private javax.swing.JMenuItem jmi_encarcelados;
     private javax.swing.JMenuItem jmi_mover;
     private javax.swing.JMenuItem jmi_mover1;
+    private javax.swing.JPopupMenu jp_encarcelados;
+    private javax.swing.JPopupMenu jp_libres;
     private javax.swing.JPopupMenu jp_lista;
     private javax.swing.JPopupMenu jp_listaH;
     private javax.swing.JPanel jp_login;
@@ -750,7 +903,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField tf_planeta;
     private javax.swing.JTextField tf_usuario;
     // End of variables declaration//GEN-END:variables
-    String usuarioP = "Stan Lee", contrasenaP = "1234";
+    String usuarioP = "stanlee", contrasenaP = "spiderman99";
     int con;
     ArrayList<Superpoder> listaPoderes = new ArrayList();
 
