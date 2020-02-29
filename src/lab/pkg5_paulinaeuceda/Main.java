@@ -65,6 +65,9 @@ public class Main extends javax.swing.JFrame {
         jp_lista = new javax.swing.JPopupMenu();
         jmi_mover = new javax.swing.JMenuItem();
         jmi_eliminar = new javax.swing.JMenuItem();
+        jp_listaH = new javax.swing.JPopupMenu();
+        jmi_mover1 = new javax.swing.JMenuItem();
+        jmi_eliminar1 = new javax.swing.JMenuItem();
         jp_login = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tf_contraseñaL = new javax.swing.JPasswordField();
@@ -79,13 +82,13 @@ public class Main extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setText("Registrar");
-        jd_crearHeroes.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, -1));
+        jd_crearHeroes.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
 
         jLabel3.setText("Nombre");
         jd_crearHeroes.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar.png"))); // NOI18N
-        jd_crearHeroes.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, -1, -1));
+        jd_crearHeroes.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
 
         jLabel8.setText("Planeta de Origen");
         jd_crearHeroes.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
@@ -146,7 +149,7 @@ public class Main extends javax.swing.JFrame {
         });
         jd_crearHeroes.getContentPane().add(jb_poder, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, -1, -1));
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("City");
         jt_cate.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jt_cate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -155,7 +158,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jt_cate);
 
-        jd_crearHeroes.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 215, 157));
+        jd_crearHeroes.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 215, 157));
 
         jButton3.setText("Actualizar Arbol");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -163,7 +166,7 @@ public class Main extends javax.swing.JFrame {
                 jButton3MouseClicked(evt);
             }
         });
-        jd_crearHeroes.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, -1, -1));
+        jd_crearHeroes.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, -1, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tree.png"))); // NOI18N
         jd_crearHeroes.getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, -1, -1));
@@ -179,6 +182,11 @@ public class Main extends javax.swing.JFrame {
         jd_crearHeroes.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 160, 170));
 
         jl_heroe.setModel(new DefaultListModel());
+        jl_heroe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_heroeMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jl_heroe);
 
         jd_crearHeroes.getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 150, 170));
@@ -238,7 +246,28 @@ public class Main extends javax.swing.JFrame {
         jp_lista.add(jmi_mover);
 
         jmi_eliminar.setText("Eliminar");
+        jmi_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_eliminarActionPerformed(evt);
+            }
+        });
         jp_lista.add(jmi_eliminar);
+
+        jmi_mover1.setText("Mover al Arbol");
+        jmi_mover1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_mover1ActionPerformed(evt);
+            }
+        });
+        jp_listaH.add(jmi_mover1);
+
+        jmi_eliminar1.setText("Eliminar");
+        jmi_eliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_eliminar1ActionPerformed(evt);
+            }
+        });
+        jp_listaH.add(jmi_eliminar1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -365,7 +394,7 @@ public class Main extends javax.swing.JFrame {
 
             DefaultListModel modelo = (DefaultListModel) jl_villanos.getModel();
             DefaultListModel modelo2 = (DefaultListModel) jl_libres.getModel();
-            
+
             String grupo = "";
             String o = JOptionPane.showInputDialog(this, "Elija el grupo: \n 1) The Dark Avengers \n 2) The Sinister Six");
             int opcion = Integer.parseInt(o);
@@ -447,57 +476,188 @@ public class Main extends javax.swing.JFrame {
 
     private void jmi_moverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_moverActionPerformed
         // TODO add your handling code here:
+        if (jl_villanos.getSelectedIndex() >= 0) {
+            DefaultTreeModel modeloARBOL = (DefaultTreeModel) jt_cate.getModel();
 
-//        ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).setNombre(JOptionPane.showInputDialog("nombre"));
-//
-//        jl_personas.setModel(modeloLISTA);
-//
-//        if (jl_villanos.getSelectedIndex() >= 0) {
-//            DefaultTreeModel modeloARBOL = (DefaultTreeModel) jt_cate.getModel();
-//
-//            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloARBOL.getRoot();
-//            //obtener la persona a guardar
-//            DefaultListModel modeloLISTA = (DefaultListModel) jl_villanos.getModel();
-//
-//            String nacionalidad, nombre;
-//            int edad;
-//            nacionalidad = ((Persona) modeloLISTA.get(jl_personas.getSelectedIndex())).getNacionalidad();
-//
-//            nombre = ((Persona) modeloLISTA.get(jl_personas.getSelectedIndex())).getNombre();
-//
-//            edad = ((Persona) modeloLISTA.get(jl_personas.getSelectedIndex())).getEdad();
-//
-//            int centinela = -1;
-//            for (int i = 0; i < raiz.getChildCount(); i++) {
-//                if (raiz.getChildAt(i).toString().equals(nacionalidad)) {
-//
-//                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Persona(nombre, edad, nacionalidad));
-//
-//                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
-//                    centinela = 1;
-//                } //fin if
-//            } //fin for  
-//
-//            if (centinela == -1) {
-//                DefaultMutableTreeNode n
-//                        = new DefaultMutableTreeNode(nacionalidad);
-//                DefaultMutableTreeNode p
-//                        = new DefaultMutableTreeNode(
-//                                new Persona(nombre, edad,
-//                                        nacionalidad)
-//                        );
-//                n.add(p);
-//                raiz.add(n);
-//            }  // fin if          
-//            modeloARBOL.reload();
-//
-//        } else {
-//            JOptionPane.showMessageDialog(this,
-//                    "No hay persona seleccionada");
-//        }
+            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloARBOL.getRoot();
+
+            //obtener la persona a guardar
+            DefaultListModel modeloLISTA = (DefaultListModel) jl_villanos.getModel();
+
+            String grupo, nombre, origen;
+            int edad, altura, muertes;
+            grupo = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getGrupo();
+
+            nombre = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getNombre();
+
+            edad = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getEdad();
+
+            origen = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getPlaneta();
+
+            altura = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getAltura();
+
+            muertes = ((Villanos) modeloLISTA.get(jl_villanos.getSelectedIndex())).getMuertes();
+
+            int centinela = -1;
+            int centinela2 = -1;
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                if (raiz.getChildAt(i).toString().equals(grupo)) {
+
+                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+
+                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                    centinela = 1;
+                } //fin if
+                if (raiz.getChildAt(i) instanceof Villanos) {
+                    DefaultMutableTreeNode p = new DefaultMutableTreeNode("Villanos");
+
+                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                    centinela2 = 1;
+                }
+            } //fin for  
+
+            if (centinela2 == -1) {
+                if (centinela == -1) {
+                    DefaultMutableTreeNode tipo = new DefaultMutableTreeNode("Villanos");
+
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
+
+                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+
+                    tipo.add(n);
+                    n.add(p);
+                    raiz.add(tipo);
+                } else {
+                    DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
+
+                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Villanos(nombre, edad, origen, altura, false, muertes, grupo));
+
+                    n.add(p);
+                    raiz.add(n);
+                }
+            }  // fin if          
+            modeloARBOL.reload();
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "No hay persona seleccionada");
+        }
 
 
     }//GEN-LAST:event_jmi_moverActionPerformed
+
+    private void jmi_mover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_mover1ActionPerformed
+        // TODO add your handling code here:
+        if (jl_heroe.getSelectedIndex() >= 0) {
+            DefaultTreeModel modeloARBOL = (DefaultTreeModel) jt_cate.getModel();
+
+            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloARBOL.getRoot();
+
+            //obtener la persona a guardar
+            DefaultListModel modeloLISTA = (DefaultListModel) jl_heroe.getModel();
+
+            String grupo, nombre, origen;
+            int edad, altura, villanos;
+            grupo = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getGrupo();
+
+            nombre = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getNombre();
+
+            edad = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getEdad();
+
+            origen = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getOrigen();
+
+            altura = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getAltura();
+
+            villanos = ((Superheroe) modeloLISTA.get(jl_heroe.getSelectedIndex())).getVillanos();
+
+            int centinela = -1;
+            int centinela2 = -1;
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+
+                if (raiz.getChildAt(i).toString().equals("Superheroe")) {
+                    for (int j = 0; j < raiz.getChildAt(i).getChildCount(); j++) {
+
+                        if (raiz.getChildAt(i).getChildAt(j).toString().equals(grupo)) {
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Superheroe(nombre, edad, origen, altura, villanos, grupo));
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i).getChildAt(j)).add(p);
+                            centinela = 1;
+                            i = raiz.getChildCount();
+                            break;
+                        } else if (raiz.getChildAt(i).getChildAt(j).toString().equals(grupo)) {
+
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Superheroe(nombre, edad, origen, altura, villanos, grupo));
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                            centinela = 1;
+                            i = raiz.getChildCount();
+
+                            break;
+                        } else {
+                            DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(grupo);
+
+                            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Superheroe(nombre, edad, origen, altura, villanos, grupo));
+
+                            carpeta.add(p);
+
+                            ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(carpeta);
+
+                        }
+                    }
+
+                    centinela2 = 1;
+                } //fin if
+
+            } //fin for  
+
+            if (centinela2 == -1 && centinela == -1) {
+                DefaultMutableTreeNode tipo = new DefaultMutableTreeNode("Superheroe");
+
+                DefaultMutableTreeNode n = new DefaultMutableTreeNode(grupo);
+
+                DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Superheroe(nombre, edad, origen, altura, villanos, grupo));
+
+                tipo.add(n);
+                n.add(p);
+                raiz.add(tipo);
+
+            } // fin if
+
+            modeloARBOL.reload();
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "No hay persona seleccionada");
+        }
+    }//GEN-LAST:event_jmi_mover1ActionPerformed
+
+    private void jl_heroeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_heroeMouseClicked
+        // TODO add your handling code here:
+        if (jl_heroe.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                jp_listaH.show(evt.getComponent(), evt.getX(), evt.getY());
+
+            }
+        }
+    }//GEN-LAST:event_jl_heroeMouseClicked
+
+    private void jmi_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminarActionPerformed
+        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Seguro de Eliminar?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.OK_OPTION) {
+            DefaultListModel m = (DefaultListModel) jl_villanos.getModel();
+            m.remove(jl_villanos.getSelectedIndex());
+        }
+    }//GEN-LAST:event_jmi_eliminarActionPerformed
+
+    private void jmi_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminar1ActionPerformed
+        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Seguro de Eliminar?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.OK_OPTION) {
+            DefaultListModel m = (DefaultListModel) jl_heroe.getModel();
+            m.remove(jl_heroe.getSelectedIndex());
+        }
+    }//GEN-LAST:event_jmi_eliminar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -573,8 +733,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_libres;
     private javax.swing.JList<String> jl_villanos;
     private javax.swing.JMenuItem jmi_eliminar;
+    private javax.swing.JMenuItem jmi_eliminar1;
     private javax.swing.JMenuItem jmi_mover;
+    private javax.swing.JMenuItem jmi_mover1;
     private javax.swing.JPopupMenu jp_lista;
+    private javax.swing.JPopupMenu jp_listaH;
     private javax.swing.JPanel jp_login;
     private javax.swing.JTree jt_cate;
     private javax.swing.JSpinner sp_altura;
